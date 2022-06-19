@@ -3,6 +3,12 @@
     <div class="block" :class="{ animate: animateBlock }"></div>
     <button @click="letsAnimate">Animate</button>
   </div>
+  <div class="container">
+    <transition>
+      <p v-if="paragraphIsVisible">It just simple paragraph</p>
+    </transition>
+    <button @click="toggleParagraph">Toggle Paragraph</button>
+  </div>
   <base-modal @close="hideDialog" v-if="dialogIsVisible">
     <p>This is a test dialog!</p>
     <button @click="hideDialog">Close it!</button>
@@ -18,6 +24,7 @@ export default {
     return {
       animateBlock: false,
       dialogIsVisible: false,
+      paragraphIsVisible: false,
     };
   },
   methods: {
@@ -30,6 +37,9 @@ export default {
     letsAnimate() {
       console.log('Click Aminate');
       this.animateBlock = true;
+    },
+    toggleParagraph() {
+      this.paragraphIsVisible = !this.paragraphIsVisible;
     },
   },
 };
@@ -70,6 +80,20 @@ button:active {
 .animate {
   /* transform: translateX(-150px); */
   animation: slide-fade 0.3s ease-out forwards;
+}
+
+.v-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.v-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.v-enter-to {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @keyframes slide-fade {
